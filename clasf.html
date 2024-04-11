@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Updated Candidate Scoreboard</title>
+<style>
+
+  body { font-family: Arial, sans-serif; display: flex; justify-content: space-between; }
+  .container { width: 45%; }
+  .candidate, .ranking-item { padding: 10px; margin-bottom: 8px; border: 1px solid #ddd; }
+  .heading { font-size: 24px; margin-bottom: 20px; }
+
+</style>
+
+</head>
+<body>
+
+<div class="container" id="candidates">
+  
+</div>
+
+<div class="container" id="ranking">
+  
+</div>
+<script>
+ const candidates = [
+    { name: "Candidate A", score: 0, key: 'A' },
+    { name: "Candidate B", score: 0, key: 'B' },
+    { name: "Candidate C", score: 0, key: 'C' },
+    { name: "Candidate D", score: 0, key: 'D' },
+    { name: "Candidate E", score: 0, key: 'E' },
+    { name: "Candidate F", score: 0, key: 'F' },
+    { name: "Candidate G", score: 0, key: 'G' },
+    { name: "Candidate H", score: 0, key: 'H' },
+    { name: "Candidate I", score: 0, key: 'I' },
+    { name: "Candidate J", score: 0, key: 'J' },
+    { name: "Candidate K", score: 0, key: 'K' },
+    { name: "Candidate L", score: 0, key: 'L' },
+  ];
+
+  function updateScore(cIndex) {
+    candidates[cIndex].score += 1;
+    displayCandidates();
+    displayRanking();
+  }
+
+  function compareScores(a, b) {
+    return b.score - a.score || a.name.localeCompare(b.name);
+  }
+
+  function displayCandidates() {
+    const candidatesElement = document.getElementById('candidates');
+    candidatesElement.innerHTML = '<div class="heading">Candidates</div>';
+    candidates.forEach((candidate, index) => {
+      const candidateElement = document.createElement('div');
+      candidateElement.className = 'candidate';
+      candidateElement.textContent = `${candidate.name}: ${candidate.score}`;
+      candidatesElement.appendChild(candidateElement);
+    });
+  }
+
+  function displayRanking() {
+    const rankingElement = document.getElementById('ranking');
+    rankingElement.innerHTML = '<div class="heading">Ranking</div>';
+    const sortedCandidates = [...candidates].sort(compareScores);
+    sortedCandidates.forEach((candidate, index) => {
+      const rankingItem = document.createElement('div');
+      rankingItem.className = 'ranking-item';
+      rankingItem.textContent = `${index + 1}. ${candidate.name}: ${candidate.score}`;
+      rankingElement.appendChild(rankingItem);
+    });
+  }
+
+  document.addEventListener('keydown', (event) => {
+    const key = event.key.toUpperCase();
+    const candidateIndex = candidates.findIndex(c => c.key === key);
+    if (candidateIndex !== -1) {
+      updateScore(candidateIndex);
+    }
+  });
+
+  displayCandidates();
+  displayRanking();
+a
+</script>
+
+</body>
